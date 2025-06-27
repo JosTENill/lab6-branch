@@ -49,5 +49,5 @@ jobs:
 
       - name: Run tests inside container
         run: |
-          docker run --rm lab6-image pytest
+          docker run --rm -e PYTHONPATH=/lab6-branch lab6-image pytest tests/
 
