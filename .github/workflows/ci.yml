@@ -1,0 +1,30 @@
+name: CI Docker Build & Test
+
+on:
+  push:
+    branches: [ feature/docker-ci, main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t lab6-image .
+
+  test:
+    name: Test Docker Image
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Run tests inside container
+        run: |
+          docker run --rm lab6-image pytest
